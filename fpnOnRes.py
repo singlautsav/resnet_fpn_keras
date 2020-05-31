@@ -51,35 +51,35 @@ class fpn:
         # print(P2,P3,P4,P5)
 
 
-        P2 = Conv2D(downPSize,(3,3),padding='SAME')(P2)
-        P3 = Conv2D(downPSize,(3,3),padding='SAME')(P3)
-        P4 = Conv2D(downPSize,(3,3),padding='SAME')(P4)
-        P5 = Conv2D(downPSize,(3,3),padding='SAME')(P5)
-        print("PyLayers")
-        print(P2,P3,P4,P5)
+        P2 = Conv2D(downPSize,(3,3),padding='SAME',name = 'fpn_p2')(P2)
+        P3 = Conv2D(downPSize,(3,3),padding='SAME',name = 'fpn_p3')(P3)
+        P4 = Conv2D(downPSize,(3,3),padding='SAME',name = 'fpn_p4')(P4)
+        P5 = Conv2D(downPSize,(3,3),padding='SAME',name = 'fpn_p5')(P5)
+        # print("PyLayers")
+        # print(P2,P3,P4,P5)
 
 
-        head1 = Conv2D(downPSize//2,(3,3),padding='SAME')(P2)
-        head1 = Conv2D(downPSize//2,(3,3),padding='SAME')(head1)
+        head1 = Conv2D(downPSize//2,(3,3),padding='SAME',name = 'fpn_head1')(P2)
+        head1 = Conv2D(downPSize//2,(3,3),padding='SAME',name = 'fpn_head1_conv')(head1)
 
-        head2 = Conv2D(downPSize//2,(3,3),padding='SAME')(P3)
-        head2 = Conv2D(downPSize//2,(3,3),padding='SAME')(head2)
+        head2 = Conv2D(downPSize//2,(3,3),padding='SAME',name = 'fpn_head2')(P3)
+        head2 = Conv2D(downPSize//2,(3,3),padding='SAME',name = 'fpn_head2_conv')(head2)
 
-        head3 = Conv2D(downPSize//2,(3,3),padding='SAME')(P4)
-        head3 = Conv2D(downPSize//2,(3,3),padding='SAME')(head3)
+        head3 = Conv2D(downPSize//2,(3,3),padding='SAME',name = 'fpn_head3')(P4)
+        head3 = Conv2D(downPSize//2,(3,3),padding='SAME',name = 'fpn_head3_conv')(head3)
 
-        head4 = Conv2D(downPSize//2,(3,3),padding='SAME')(P5)
-        head4 = Conv2D(downPSize//2,(3,3),padding='SAME')(head4)
+        head4 = Conv2D(downPSize//2,(3,3),padding='SAME',name = 'fpn_head4')(P5)
+        head4 = Conv2D(downPSize//2,(3,3),padding='SAME',name = 'fpn_head4_conv')(head4)
 
         print("heads")
         print(head1,head2,head3,head4)
 
-        p2 = UpSampling2D(size=(8,8))(head4)
-        p3 = UpSampling2D(size=(4,4))(head3)
-        p4 = UpSampling2D(size=(2,2))(head2)
-        p5 = head1
+        fpn_f_p2 = UpSampling2D(size=(8,8),name = 'fpn_finalP2')(head4)
+        fpn_f_p3 = UpSampling2D(size=(4,4),name = 'fpn_finalP3')(head3)
+        fpn_f_p4 = UpSampling2D(size=(2,2),name = 'fpn_finalP4')(head2)
+        fpn_f_p5 = head1
 
-        x = Concatenate(axis=-1)([p2,p3,p4,p5])
+        x = Concatenate(axis=-1)([fpn_f_p2,fpn_f_p3,fpn_f_p4,fpn_f_p5])
         x = Flatten()(x)
         # x = Dense()
 
