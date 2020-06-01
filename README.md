@@ -4,7 +4,7 @@ The code is done in keras and is very easy for anyone to understand.
 
 ## File Descriptions
 
-resnet.py --> Was implemented as a part of assignment for the course mentioned ahead has been modified for this project and returns us the output of each resnet stage. (adapted from [Coursera CNN](coursera.org/learn/convolutional-neural-networks/) )
+resnet.py --> Was implemented as a part of assignment for the course mentioned ahead, has been modified for this project and returns us the output of each resnet stage. (adapted from [Coursera CNN](coursera.org/learn/convolutional-neural-networks/) )
 
 fpnOnRes.py --> takes the stages from the resnet.py and adds the fpn layer to it. 
 
